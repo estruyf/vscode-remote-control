@@ -28,7 +28,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 				ws.addEventListener('message', (event: MessageEvent) => {
 					if (event && event.data && event.data) {
 						const wsData: CommandData = JSON.parse(event.data as string);
-						vscode.commands.executeCommand(wsData.command);
+						vscode.commands.executeCommand(wsData.command, wsData.args);
 					}
 				});
 			}
@@ -41,7 +41,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 		});
 	
 		wss.on('close', () => {
-			console.log('Closing the ws connection')
+			console.log('Closing the ws connection');
 		});
 
 		console.log('VSCode Remote Control is now active!');

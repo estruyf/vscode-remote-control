@@ -11,13 +11,13 @@
   },
   "icon": "assets/logo.png",
   "galleryBanner": {
-		"color": "#132136",
-		"theme": "dark"
-	},
+    "color": "#132136",
+    "theme": "dark"
+  },
   "repository": {
-		"type": "git",
-		"url": "https://github.com/estruyf/vscode-remote-control"
-	},
+    "type": "git",
+    "url": "https://github.com/estruyf/vscode-remote-control"
+  },
   "categories": [
     "Other"
   ],
@@ -31,15 +31,15 @@
       "title": "Remote Control: Configuration",
       "properties": {
         "remoteControl.enable": {
-					"type": "boolean",
-					"default": true,
-					"description": "Specifies if you want enable/disable the remote control globally or for a workspace."
-				},
-				"remoteControl.port": {
-					"type": "number",
-					"default": 3710,
-					"description": "Specifies the port on which the websocket server will start. If you are using multiple VSCode instances, it is best to set this in your workspace settings."
-				}
+          "type": "boolean",
+          "default": true,
+          "description": "Specifies if you want enable/disable the remote control globally or for a workspace."
+        },
+        "remoteControl.port": {
+          "type": "number",
+          "default": 3710,
+          "description": "Specifies the port on which the websocket server will start. If you are using multiple VSCode instances, it is best to set this in your workspace settings."
+        }
       },
       "commands": [
         {
