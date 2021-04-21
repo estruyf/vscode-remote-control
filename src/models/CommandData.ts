@@ -1,0 +1,3 @@
+interface CommandData {
+  command: string;
+}

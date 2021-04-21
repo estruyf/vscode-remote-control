@@ -1,0 +1,76 @@
+{
+  "name": "vscode-remote-control",
+  "displayName": "Remote Control",
+  "description": "This extension allows you to remotely control Visual Studio Code. Run commands from anywhere you want on your device. The extension allows you to take VSCode automation to the next level.",
+  "publisher": "eliostruyf",
+  "license": "MIT",
+  "version": "0.0.1",
+  "preview": true,
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/estruyf/vscode-remote-control"
+	},
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*",
+    "remoteControl.openSettings"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Remote Control: Configuration",
+      "properties": {
+        "remoteControl.enable": {
+					"type": "boolean",
+					"default": true,
+					"description": "Specifies if you want enable/disable the remote control globally or for a workspace."
+				},
+				"remoteControl.port": {
+					"type": "number",
+					"default": 3710,
+					"description": "Specifies the port on which the websocket server will start. If you are using multiple VSCode instances, it is best to set this in your workspace settings."
+				}
+      },
+      "commands": [
+        {
+          "command": "remoteControl.openSettings",
+          "title": "Remote Control: Open settings"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "test-compile": "tsc -p ./",
+    "test-watch": "tsc -watch -p ./",
+    "pretest": "npm run test-compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.55.0",
+    "@types/ws": "7.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.2.1",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.5.0",
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0",
+    "ws": "7.4.5"
+  }
+}
