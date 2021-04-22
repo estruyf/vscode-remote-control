@@ -18,6 +18,8 @@ const config = {
   },
   devtool: 'nosources-source-map',
   externals: {
+    bufferutil: 'bufferutil',
+    'utf-8-validate': 'commonjs utf-8-validate',
     vscode: 'commonjs vscode' // the vscode-module is created on-the-fly and must be excluded. Add other modules that cannot be webpack'ed, 📖 -> https://webpack.js.org/configuration/externals/
   },
   resolve: {
