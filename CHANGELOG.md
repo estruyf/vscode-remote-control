@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.0.0]
+
+- Documentation updates
+- [#1](https://github.com/estruyf/vscode-remote-control/issues/1): Implemented fallback ports for the websocket server
+
 ## [0.0.3]
 
 - Added `global` and `local` configuration buttons on error notification.
