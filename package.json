@@ -51,6 +51,11 @@
           "default": 3710,
           "description": "Specifies the port on which the websocket server will start. If you are using multiple VSCode instances, it is best to set this in your workspace settings."
         },
+        "remoteControl.host": {
+          "type": "string",
+          "default": "127.0.0.1",
+          "description": "Specifies the host to which the websocket server will bind."
+        },
         "remoteControl.fallbacks": {
           "type": "array",
           "default": [],

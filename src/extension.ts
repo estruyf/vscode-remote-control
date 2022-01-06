@@ -20,14 +20,14 @@ const errorNotification = (port: number): void => {
 	});
 }
 
-const startWebsocketServer = async (port: number, fallbackPorts: number[], showNotification: boolean = false): Promise<void> => {
+const startWebsocketServer = async (host: string, port: number, fallbackPorts: number[], showNotification: boolean = false): Promise<void> => {
 
-	const isInUse = await tcpPorts.check(port);
+	const isInUse = await tcpPorts.check(port, host);
 	if (isInUse) {
 		if (fallbackPorts.length > 0) {
 			const nextPort = fallbackPorts.shift();
 			if (nextPort) {
-				startWebsocketServer(nextPort, fallbackPorts, true);
+				startWebsocketServer(host, nextPort, fallbackPorts, true);
 				return;
 			} else {
 				errorNotification(port);
@@ -40,7 +40,7 @@ const startWebsocketServer = async (port: number, fallbackPorts: number[], showN
 	}
 
 	// Start the API server
-	wss = new WebSocket.Server({ port });
+	wss = new WebSocket.Server({ host, port });
 	
 	wss.on('connection', (connection: any) => {
 		ws = connection;
@@ -57,7 +57,7 @@ const startWebsocketServer = async (port: number, fallbackPorts: number[], showN
 
 	wss.on('listening', (error: any) => {
 		if (showNotification) {
-			vscode.window.showInformationMessage(`Remote Control: Connected to port "${port}"`);
+			vscode.window.showInformationMessage(`Remote Control: Listening on "ws://${host}:${port}"`);
 		}
 	});
 
@@ -73,6 +73,7 @@ const startWebsocketServer = async (port: number, fallbackPorts: number[], showN
 export function activate({ subscriptions }: vscode.ExtensionContext) {
 	const config = vscode.workspace.getConfiguration(APP_NAME);
 	const enabled = config.get<number | null>("enable");
+	const host = config.get<string | null>("host");
 	const port = config.get<number | null>("port");
 	const fallbackPorts = config.get<number[] | null>("fallbacks");
 
@@ -82,7 +83,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	subscriptions.push(openSettings);
 
 	if (enabled) {
-		startWebsocketServer(port || 3710, (fallbackPorts || []).filter(p => p !== port));
+		startWebsocketServer(host || "127.0.0.1", port || 3710, (fallbackPorts || []).filter(p => p !== port));
 
 		console.log('VSCode Remote Control is now active!');
 	} else {
