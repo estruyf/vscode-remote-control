@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.1.0]
+
+- Allow to change the hostname of the websocket server
+
 ## [1.0.0]
 
 - Documentation updates

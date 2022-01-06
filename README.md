@@ -31,6 +31,7 @@ In the background it uses `websockets` in order to listen to commands it should 
 The extension has the following settings which you can use to configure it:
 
 * `remoteControl.enable`: enable/disable this extension
+* `remoteControl.host`: the hostname of the websocket server. Default: `127.0.0.1`.
 * `remoteControl.port`: set the port number for the websocket to start the server
 * `remoteControl.fallbacks`: an array of port numbers to fallback to if the port is already in use.
 
