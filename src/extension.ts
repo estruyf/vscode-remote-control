@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import WebSocket, { MessageEvent } from 'ws';
 import * as tcpPorts from 'tcp-port-used';
+import { Logger } from './services/Logger';
 
 
 let wss: WebSocket.Server | null = null;
@@ -49,13 +50,24 @@ const startWebsocketServer = async (host: string, port: number, fallbackPorts: n
 			ws.addEventListener('message', (event: MessageEvent) => {
 				if (event && event.data && event.data) {
 					const wsData: CommandData = JSON.parse(event.data as string);
-					vscode.commands.executeCommand(wsData.command, wsData.args);
+					const args = wsData.args;
+
+					if (wsData.command === "vscode.open" || 
+							wsData.command === "vscode.openFolder") {
+						if (args && args[0]) {
+							args[0] = vscode.Uri.file(args[0]);
+						}
+					}
+
+					vscode.commands.executeCommand(wsData.command, ...args);
 				}
 			});
 		}
 	});
 
 	wss.on('listening', (error: any) => {
+		Logger.info(`Remote Control: Listening on "ws://${host}:${port}"`);
+
 		if (showNotification) {
 			vscode.window.showInformationMessage(`Remote Control: Listening on "ws://${host}:${port}"`);
 		}
@@ -66,7 +78,7 @@ const startWebsocketServer = async (host: string, port: number, fallbackPorts: n
 	});
 
 	wss.on('close', () => {
-		console.log('Closing the ws connection');
+		Logger.info('Closing the ws connection');
 	});
 };
 
@@ -85,9 +97,9 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 	if (enabled) {
 		startWebsocketServer(host || "127.0.0.1", port || 3710, (fallbackPorts || []).filter(p => p !== port));
 
-		console.log('VSCode Remote Control is now active!');
+		Logger.info('VSCode Remote Control is now active!');
 	} else {
-		console.log('VSCode Remote Control is not running!');
+		Logger.info('VSCode Remote Control is not running!');
 	}
 }
 

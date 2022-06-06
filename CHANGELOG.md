@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.2.0]
+
+- Added output channel
+- [#3](https://github.com/estruyf/vscode-remote-control/issues/3): Fix for using the `vscode.open` and `vscode.openFolder` command.
+
 ## [1.1.0]
 
 - Allow to change the hostname of the websocket server

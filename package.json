@@ -33,8 +33,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*",
-    "remoteControl.openSettings"
+    "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
