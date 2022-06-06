@@ -59,7 +59,11 @@ const startWebsocketServer = async (host: string, port: number, fallbackPorts: n
 						}
 					}
 
-					vscode.commands.executeCommand(wsData.command, ...args);
+					if (args instanceof Array) {
+						vscode.commands.executeCommand(wsData.command, ...args);
+					} else {
+						vscode.commands.executeCommand(wsData.command, args);
+					}
 				}
 			});
 		}

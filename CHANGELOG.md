@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.2.1]
+
+- Fix to execute command with `array` or `object` arguments
+
 ## [1.2.0]
 
 - Added output channel
