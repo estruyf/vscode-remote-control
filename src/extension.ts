@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
-import WebSocket, { MessageEvent } from 'ws';
+import WebSocket, { AddressInfo, MessageEvent } from 'ws';
 import * as tcpPorts from 'tcp-port-used';
 import { Logger } from './services/Logger';
+import http from 'http';
+import url from 'url';
 
 
 let wss: WebSocket.Server | null = null;
@@ -10,38 +12,46 @@ let ws: WebSocket | null = null;
 const EXTENSION_ID: string = "eliostruyf.vscode-remote-control";
 const APP_NAME: string = "remoteControl";
 
-const errorNotification = (port: number): void => {
-	vscode.window.showErrorMessage(`Remote Control: Port "${port}" is already in use. Please configure another port for the "remotecontrol.port" workspace setting.`, 'Configure locally', 'Configure globally').then((option: string | undefined) => {
-		if (option === "Configure globally") {
-			vscode.commands.executeCommand(`${APP_NAME}.openSettings`);
-		} else if (option === "Configure locally") {
-			vscode.commands.executeCommand('workbench.action.openSettings', `@ext:${EXTENSION_ID}`);
-			vscode.commands.executeCommand('workbench.action.openWorkspaceSettings');
+const warningNotification = (port: number, newPort: number): void => {
+	vscode.window.showWarningMessage(`Remote Control: Port "${port}" was already in use. The extension opened on a port "${newPort}". If you want, you can configure another port via the "remotecontrol.port" workspace setting.`, 'Configure locally').then(async (option: string | undefined) => {
+		if (option === "Configure locally") {
+			await vscode.commands.executeCommand('workbench.action.openSettings', `@ext:${EXTENSION_ID}`);
+			await vscode.commands.executeCommand('workbench.action.openWorkspaceSettings');
 		}
 	});
 }
 
 const startWebsocketServer = async (host: string, port: number, fallbackPorts: number[], showNotification: boolean = false): Promise<void> => {
 
-	const isInUse = await tcpPorts.check(port, host);
-	if (isInUse) {
-		if (fallbackPorts.length > 0) {
-			const nextPort = fallbackPorts.shift();
-			if (nextPort) {
-				startWebsocketServer(host, nextPort, fallbackPorts, true);
-				return;
+	let isInUse = false;
+	if (port) {
+		isInUse = await tcpPorts.check(port, host);
+		if (isInUse) {
+			if (fallbackPorts.length > 0) {
+				const nextPort = fallbackPorts.shift();
+				if (nextPort) {
+					startWebsocketServer(host, nextPort, fallbackPorts, true);
+					return;
+				} else {
+					isInUse = true;
+				}
 			} else {
-				errorNotification(port);
-				return;
+				isInUse = true;
 			}
-		} else {
-			errorNotification(port);
-			return;
 		}
 	}
 
 	// Start the API server
-	wss = new WebSocket.Server({ host, port });
+	const server = http.createServer();
+	wss = new WebSocket.Server({ noServer: true });
+
+	server.on('upgrade', function upgrade(request, socket, head) {
+		const pathname = url.parse(request.url).pathname;
+
+		wss?.handleUpgrade(request, socket, head, function done(ws) {
+			wss?.emit('connection', ws, request);
+		});
+	});
 	
 	wss.on('connection', (connection: any) => {
 		ws = connection;
@@ -69,16 +79,29 @@ const startWebsocketServer = async (host: string, port: number, fallbackPorts: n
 		}
 	});
 
-	wss.on('listening', (error: any) => {
-		Logger.info(`Remote Control: Listening on "ws://${host}:${port}"`);
+	server.listen(isInUse ? 0 : port, host, () => {
+		const address = server.address();
+		const verifiedPort = (address as AddressInfo).port;
+		Logger.info(`Remote Control: Listening on "ws://${host}:${verifiedPort}"`);
 
 		if (showNotification) {
-			vscode.window.showInformationMessage(`Remote Control: Listening on "ws://${host}:${port}"`);
+			vscode.window.showInformationMessage(`Remote Control: Listening on "ws://${host}:${verifiedPort}"`);
+		}
+
+		const statusbar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+		statusbar.text = `$(plug) RC Port: ${verifiedPort}`;
+		statusbar.tooltip = `Remote Control: Listening on "ws://${host}:${verifiedPort}"`;
+		statusbar.show();
+
+		if (isInUse) {
+			warningNotification(port, verifiedPort);
 		}
 	});
 
-	wss.on('error', () => {
-		errorNotification(port);
+	wss.on('error', (e) => {
+		Logger.error(`Error while starting the websocket server.`);
+		Logger.error((e as Error).message);
+		vscode.window.showErrorMessage(`Remote Control: Error while starting the websocket server. Check the output for more details.`);
 	});
 
 	wss.on('close', () => {
@@ -103,7 +126,7 @@ export function activate({ subscriptions }: vscode.ExtensionContext) {
 
 		Logger.info('VSCode Remote Control is now active!');
 	} else {
-		Logger.info('VSCode Remote Control is not running!');
+		Logger.warning('VSCode Remote Control is not running!');
 	}
 }
 

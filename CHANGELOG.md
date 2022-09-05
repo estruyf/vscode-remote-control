@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.3.0]
+
+- When the port is in use, the extension will try one of your fallback ports. If none of them are available, it will use a random port.
+- New status bar item to show the port number of the websocket server.
+
 ## [1.2.1]
 
 - Fix to execute command with `array` or `object` arguments

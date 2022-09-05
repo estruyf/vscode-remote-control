@@ -35,6 +35,12 @@ The extension has the following settings which you can use to configure it:
 * `remoteControl.port`: set the port number for the websocket to start the server
 * `remoteControl.fallbacks`: an array of port numbers to fallback to if the port is already in use.
 
+## Current port in use
+
+Once the extension starts, it will show the port number in the status bar. This way you can easily see which port is used.
+
+![](assets/statusbar-item.png)
+
 ## Usage
 
 When you install this extension, it will automatically open a `websocket` on port `3710`. This port can be changed on in the VSCode settings. When you are going to use multiple VSCode sessions at the same time, it is best to configure it on workspace level or use the `remoteControl.fallbacks` setting to specify fallback ports when the previous one is already in use.
