@@ -4,7 +4,7 @@
   "description": "This extension allows you to remotely control Visual Studio Code. Run commands from anywhere you want on your device. The extension allows you to take VSCode automation to the next level.",
   "publisher": "eliostruyf",
   "license": "MIT",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "engines": {
     "vscode": "^1.55.0"
   },
