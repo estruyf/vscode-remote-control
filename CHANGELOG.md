@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.4.0]
+
+- [#6](https://github.com/estruyf/vscode-remote-control/issues/6): Added `REMOTE_CONTROL_PORT` environment variable to the vscode integrated terminal. Thanks to [https://github.com/joshuaeke](joshuaeke).
+
 ## [1.3.0]
 
 - When the port is in use, the extension will try one of your fallback ports. If none of them are available, it will use a random port.

@@ -6,12 +6,12 @@
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-remote-control" title="Check it out on the Visual Studio Marketplace">
-    <img src="https://vsmarketplacebadge.apphb.com/version/eliostruyf.vscode-remote-control.svg" alt="Visual Studio Marketplace" style="display: inline-block" />
+    <img src="https://vsmarketplacebadges.dev/version/eliostruyf.vscode-remote-control.svg" alt="Visual Studio Marketplace" style="display: inline-block" />
   </a>
 
-  <img src="https://vsmarketplacebadge.apphb.com/installs/eliostruyf.vscode-remote-control.svg" alt="Number of installs"  style="display: inline-block;margin-left:10px" />
+  <img src="https://vsmarketplacebadges.dev/installs/eliostruyf.vscode-remote-control.svg" alt="Number of installs"  style="display: inline-block;margin-left:10px" />
   
-  <img src="https://vsmarketplacebadge.apphb.com/rating/eliostruyf.vscode-remote-control.svg" alt="Ratings" style="display: inline-block;margin-left:10px" />
+  <img src="https://vsmarketplacebadges.dev/rating/eliostruyf.vscode-remote-control.svg" alt="Ratings" style="display: inline-block;margin-left:10px" />
 
   <a href="https://www.buymeacoffee.com/zMeFRy9" title="Buy me a coffee" style="margin-left:10px">
     <img src="https://img.shields.io/badge/Buy%20me%20a%20coffee-€%203-blue?logo=buy-me-a-coffee&style=flat" alt="Buy me a coffee" style="display: inline-block" />
@@ -30,10 +30,10 @@ In the background it uses `websockets` in order to listen to commands it should 
 
 The extension has the following settings which you can use to configure it:
 
-* `remoteControl.enable`: enable/disable this extension
-* `remoteControl.host`: the hostname of the websocket server. Default: `127.0.0.1`.
-* `remoteControl.port`: set the port number for the websocket to start the server
-* `remoteControl.fallbacks`: an array of port numbers to fallback to if the port is already in use.
+- `remoteControl.enable`: enable/disable this extension
+- `remoteControl.host`: the hostname of the websocket server. Default: `127.0.0.1`.
+- `remoteControl.port`: set the port number for the websocket to start the server
+- `remoteControl.fallbacks`: an array of port numbers to fallback to if the port is already in use.
 
 ## Current port in use
 
@@ -57,7 +57,7 @@ The text you need to pass to the `websocket` listener is as you can see a string
 
 ### How do I get the command ID?
 
-To get the command ID, open the `Command Palette` and type `Show all commands`. This will give you a list with all the available commands. 
+To get the command ID, open the `Command Palette` and type `Show all commands`. This will give you a list with all the available commands.
 
 Behind each command, there is a gear button. When you click on it, it brings you to the shortcut configuration. Where you can right-click on the command and copy its ID.
 
