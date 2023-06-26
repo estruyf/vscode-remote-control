@@ -19,7 +19,7 @@ const warningNotification = (port: number, newPort: number): void => {
 			await vscode.commands.executeCommand('workbench.action.openWorkspaceSettings');
 		}
 	});
-}
+};
 
 const startWebsocketServer = async (context:vscode.ExtensionContext, host: string, port: number, fallbackPorts: number[], showNotification: boolean = false): Promise<void> => {
 
@@ -68,6 +68,17 @@ const startWebsocketServer = async (context:vscode.ExtensionContext, host: strin
 							args[0] = vscode.Uri.file(args[0]);
 						}
 					}
+
+					if (wsData.command === "terminal.execute") {
+						let terminal = vscode.window.activeTerminal;
+					  
+						if (terminal && args) {
+						  terminal.show(true);
+						  terminal.sendText(args);
+						  return;
+						}
+						return;
+					  }
 
 					if (args instanceof Array) {
 						vscode.commands.executeCommand(wsData.command, ...args);
