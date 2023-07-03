@@ -2,9 +2,13 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.5.0]
+
+- [#7](https://github.com/estruyf/vscode-remote-control/issues/7): Execute terminal commands. Thanks to [eluce2](https://github.com/eluce2).
+
 ## [1.4.0]
 
-- [#6](https://github.com/estruyf/vscode-remote-control/issues/6): Added `REMOTE_CONTROL_PORT` environment variable to the vscode integrated terminal. Thanks to [https://github.com/joshuaeke](joshuaeke).
+- [#6](https://github.com/estruyf/vscode-remote-control/issues/6): Added `REMOTE_CONTROL_PORT` environment variable to the vscode integrated terminal. Thanks to [joshuaeke](https://github.com/joshuaeke).
 
 ## [1.3.0]
 
