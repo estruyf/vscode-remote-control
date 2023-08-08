@@ -59,6 +59,11 @@
           "type": "array",
           "default": [],
           "description": "Allows you to specify fallback ports when the main one is taken."
+        },
+        "remoteControl.onlyWhenInFocus": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allows you to broadcast commands to all vscode instances and only the one with focus will execute it."
         }
       },
       "commands": [
