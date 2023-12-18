@@ -9,6 +9,9 @@ import url from 'url';
 let wss: WebSocket.Server | null = null;
 let ws: WebSocket | null = null;
 
+let hasFocus: boolean = false;
+let onlyWhenInFocus: boolean | null | undefined = false;
+
 const EXTENSION_ID: string = "eliostruyf.vscode-remote-control";
 const APP_NAME: string = "remoteControl";
 
@@ -58,7 +61,7 @@ const startWebsocketServer = async (context:vscode.ExtensionContext, host: strin
 
 		if (ws) {
 			ws.addEventListener('message', (event: MessageEvent) => {
-				if (event && event.data && event.data) {
+				if ((!onlyWhenInFocus || hasFocus) && event && event.data && event.data) {
 					const wsData: CommandData = JSON.parse(event.data as string);
 					const args = wsData.args;
 
@@ -129,6 +132,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const host = config.get<string | null>("host");
 	const port = config.get<number | null>("port");
 	const fallbackPorts = config.get<number[] | null>("fallbacks");
+	onlyWhenInFocus = config.get<boolean | null>("onlyWhenInFocus");
 
 	const openSettings = vscode.commands.registerCommand(`${APP_NAME}.openSettings`, () => {
     vscode.commands.executeCommand('workbench.action.openSettings', `@ext:${EXTENSION_ID}`);
@@ -142,6 +146,8 @@ export function activate(context: vscode.ExtensionContext) {
 	} else {
 		Logger.warning('VSCode Remote Control is not running!');
 	}
+
+	vscode.window.onDidChangeWindowState((event) => { hasFocus = event.focused })
 }
 
 // this method is called when your extension is deactivated
