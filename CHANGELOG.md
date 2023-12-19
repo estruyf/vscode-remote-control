@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.6.0]
+
+- [#9](https://github.com/estruyf/vscode-remote-control/issues/9): Run the commands in the VSCode editor which is focused. Thanks to [Mirko Kunze](https://github.com/mqnc).
+
 ## [1.5.0]
 
 - [#7](https://github.com/estruyf/vscode-remote-control/issues/7): Execute terminal commands. Thanks to [eluce2](https://github.com/eluce2).

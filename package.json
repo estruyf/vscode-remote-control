@@ -63,7 +63,7 @@
         "remoteControl.onlyWhenInFocus": {
           "type": "boolean",
           "default": false,
-          "description": "Allows you to broadcast commands to all vscode instances and only the one with focus will execute it."
+          "description": "Allows you to broadcast commands to all VSCode instances and only the one with focus will execute it."
         }
       },
       "commands": [
