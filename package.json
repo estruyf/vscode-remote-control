@@ -8,8 +8,7 @@
   "engines": {
     "vscode": "^1.55.0"
   },
-  "badges": [
-    {
+  "badges": [{
       "description": "version",
       "url": "https://img.shields.io/github/package-json/v/estruyf/vscode-remote-control?color=green&label=vscode-remote-control&style=flat-square",
       "href": "https://github.com/estruyf/vscode-remote-control"
@@ -33,7 +32,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -66,12 +65,10 @@
           "description": "Allows you to broadcast commands to all VSCode instances and only the one with focus will execute it."
         }
       },
-      "commands": [
-        {
-          "command": "remoteControl.openSettings",
-          "title": "Remote Control: Open settings"
-        }
-      ]
+      "commands": [{
+        "command": "remoteControl.openSettings",
+        "title": "Remote Control: Open settings"
+      }]
     }
   },
   "scripts": {
