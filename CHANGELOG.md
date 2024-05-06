@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.7.0]
+
+- Log JSON parsing error
+- Added support for `markdown.showPreview` command
+
 ## [1.6.0]
 
 - [#9](https://github.com/estruyf/vscode-remote-control/issues/9): Run the commands in the VSCode editor which is focused. Thanks to [Mirko Kunze](https://github.com/mqnc).

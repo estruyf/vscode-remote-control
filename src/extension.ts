@@ -76,12 +76,22 @@ const startWebsocketServer = async (
         }
 
         if (event && event.data && event.data) {
-          const wsData: CommandData = JSON.parse(event.data as string);
+          let wsData: CommandData;
+
+          try {
+            wsData = JSON.parse(event.data as string);
+          } catch (error) {
+            Logger.error("Error while parsing the incoming data.");
+            Logger.error((error as Error).message);
+            return;
+          }
+
           const args = wsData.args;
 
           if (
             wsData.command === "vscode.open" ||
-            wsData.command === "vscode.openFolder"
+            wsData.command === "vscode.openFolder" ||
+            wsData.command === "markdown.showPreview"
           ) {
             if (args && args[0]) {
               args[0] = vscode.Uri.file(args[0]);
