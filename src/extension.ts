@@ -70,7 +70,7 @@ const startWebsocketServer = async (
     ws = connection;
 
     if (ws) {
-      ws.addEventListener("message", (event: MessageEvent) => {
+      ws.addEventListener("message", async (event: MessageEvent) => {
         if (onlyWhenInFocus && !vscode.window.state.focused) {
           return;
         }
@@ -110,9 +110,25 @@ const startWebsocketServer = async (
           }
 
           if (args instanceof Array) {
-            vscode.commands.executeCommand(wsData.command, ...args);
+            var response = await vscode.commands.executeCommand(wsData.command, ...args)
+            if (response) {
+              try {
+                ws?.send(JSON.stringify(response));
+              }
+              catch (error) {
+                Logger.error((error as Error).message);
+              }
+            };
           } else {
-            vscode.commands.executeCommand(wsData.command, args);
+            var response = await vscode.commands.executeCommand(wsData.command, args);
+            if (response) {
+              try {
+                ws?.send(JSON.stringify(response));
+              }
+              catch (error) {
+                Logger.error((error as Error).message);
+              }
+            };
           }
         }
       });

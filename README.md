@@ -56,6 +56,14 @@ The text you need to pass to the `websocket` listener is as you can see a string
 
 - `Command`: `<command-id>`
 
+### Passing arguments
+
+to pass additional arguments use
+
+```bash
+echo "{ \"command\": \"command.id.with.arguments\", \"args\": [\"value\"] }" | websocat ws://localhost:3710
+```
+
 ### How do I get the command ID?
 
 To get the command ID, open the `Command Palette` and type `Show all commands`. This will give you a list with all the available commands.
