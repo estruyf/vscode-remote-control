@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.8.0]
+
+- [#12](https://github.com/estruyf/vscode-remote-control/issues/12): Get the return value back from an executed command. Thanks to [Konrad Weihmann](https://github.com/kwavnet).
+
 ## [1.7.0]
 
 - Log JSON parsing error

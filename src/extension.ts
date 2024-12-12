@@ -109,27 +109,21 @@ const startWebsocketServer = async (
             return;
           }
 
+          let response: any;
           if (args instanceof Array) {
-            var response = await vscode.commands.executeCommand(wsData.command, ...args)
-            if (response) {
-              try {
-                ws?.send(JSON.stringify(response));
-              }
-              catch (error) {
-                Logger.error((error as Error).message);
-              }
-            };
+            response = await vscode.commands.executeCommand(wsData.command, ...args);
           } else {
-            var response = await vscode.commands.executeCommand(wsData.command, args);
-            if (response) {
-              try {
-                ws?.send(JSON.stringify(response));
-              }
-              catch (error) {
-                Logger.error((error as Error).message);
-              }
-            };
+            response = await vscode.commands.executeCommand(wsData.command, args); 
           }
+          
+          if (response) {
+            try {
+              ws?.send(JSON.stringify(response));
+            }
+            catch (error) {
+              Logger.error((error as Error).message);
+            }
+          };
         }
       });
     }
