@@ -4,11 +4,12 @@
   "description": "This extension allows you to remotely control Visual Studio Code. Run commands from anywhere you want on your device. The extension allows you to take VSCode automation to the next level.",
   "publisher": "eliostruyf",
   "license": "MIT",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "engines": {
     "vscode": "^1.55.0"
   },
-  "badges": [{
+  "badges": [
+    {
       "description": "version",
       "url": "https://img.shields.io/github/package-json/v/estruyf/vscode-remote-control?color=green&label=vscode-remote-control&style=flat-square",
       "href": "https://github.com/estruyf/vscode-remote-control"
@@ -65,10 +66,12 @@
           "description": "Allows you to broadcast commands to all VSCode instances and only the one with focus will execute it."
         }
       },
-      "commands": [{
-        "command": "remoteControl.openSettings",
-        "title": "Remote Control: Open settings"
-      }]
+      "commands": [
+        {
+          "command": "remoteControl.openSettings",
+          "title": "Remote Control: Open settings"
+        }
+      ]
     }
   },
   "scripts": {
