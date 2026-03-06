@@ -16,7 +16,7 @@
     },
     {
       "description": "Buy me a coffee",
-      "url": "https://img.shields.io/badge/Buy%20me%20a%20coffee-€%203-blue?logo=buy-me-a-coffee&style=flat-square",
+      "url": "https://img.shields.io/badge/Buy%20me%20a%20coffee-\u20ac%203-blue?logo=buy-me-a-coffee&style=flat-square",
       "href": "https://www.buymeacoffee.com/zMeFRy9"
     }
   ],
@@ -64,6 +64,11 @@
           "type": "boolean",
           "default": false,
           "description": "Allows you to broadcast commands to all VSCode instances and only the one with focus will execute it."
+        },
+        "remoteControl.noAutoFallback": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, the extension will not fall back to other ports when the configured port is already in use. The server will not start if the port is unavailable."
         }
       },
       "commands": [
