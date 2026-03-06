@@ -34,6 +34,7 @@ The extension has the following settings which you can use to configure it:
 - `remoteControl.host`: the hostname of the websocket server. Default: `127.0.0.1`.
 - `remoteControl.port`: set the port number for the websocket to start the server
 - `remoteControl.fallbacks`: an array of port numbers to fallback to if the port is already in use
+- `remoteControl.noAutoFallback`: when enabled, the extension will not fall back to other ports when the configured port is already in use. The server will not start if the port is unavailable. Default: `false`.
 - `remoteControl.onlyWhenInFocus`: allows you to broadcast commands to all VSCode instances and only the one with focus will execute it.
 
 ## Current port in use
