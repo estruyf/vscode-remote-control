@@ -11,19 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 20
           registry-url: https://registry.npmjs.org/
 
       - name: Install the dependencies
         run: npm i
-        
-      # - name: Clone the toolkit
-      #   run: |
-      #     git clone https://github.com/microsoftgraph/microsoft-graph-toolkit
-      #     npm run snippets
 
       - name: Publish
         run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}

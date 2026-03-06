@@ -36,16 +36,24 @@ const startWebsocketServer = async (
   host: string,
   port: number,
   fallbackPorts: number[],
+  noAutoFallback: boolean = false,
   showNotification: boolean = false
 ): Promise<void> => {
   let isInUse = false;
   if (port) {
     isInUse = await tcpPorts.check(port, host);
     if (isInUse) {
+      if (noAutoFallback) {
+        Logger.warning(`Remote Control: Port "${port}" is already in use. The server will not start because "remoteControl.noAutoFallback" is enabled.`);
+        vscode.window.showWarningMessage(
+          `Remote Control: Port "${port}" is already in use. The server will not start because "remoteControl.noAutoFallback" is enabled.`
+        );
+        return;
+      }
       if (fallbackPorts.length > 0) {
         const nextPort = fallbackPorts.shift();
         if (nextPort) {
-          startWebsocketServer(context, host, nextPort, fallbackPorts, true);
+          startWebsocketServer(context, host, nextPort, fallbackPorts, noAutoFallback, true);
           return;
         } else {
           isInUse = true;
@@ -109,27 +117,21 @@ const startWebsocketServer = async (
             return;
           }
 
+          let response: any;
           if (args instanceof Array) {
-            var response = await vscode.commands.executeCommand(wsData.command, ...args)
-            if (response) {
-              try {
-                ws?.send(JSON.stringify(response));
-              }
-              catch (error) {
-                Logger.error((error as Error).message);
-              }
-            };
+            response = await vscode.commands.executeCommand(wsData.command, ...args);
           } else {
-            var response = await vscode.commands.executeCommand(wsData.command, args);
-            if (response) {
-              try {
-                ws?.send(JSON.stringify(response));
-              }
-              catch (error) {
-                Logger.error((error as Error).message);
-              }
-            };
+            response = await vscode.commands.executeCommand(wsData.command, args); 
           }
+          
+          if (response) {
+            try {
+              ws?.send(JSON.stringify(response));
+            }
+            catch (error) {
+              Logger.error((error as Error).message);
+            }
+          };
         }
       });
     }
@@ -185,6 +187,7 @@ export function activate(context: vscode.ExtensionContext) {
   const port = config.get<number | null>("port");
   const fallbackPorts = config.get<number[] | null>("fallbacks");
   onlyWhenInFocus = config.get<boolean | null>("onlyWhenInFocus");
+  const noAutoFallback = config.get<boolean | null>("noAutoFallback");
 
   const openSettings = vscode.commands.registerCommand(
     `${APP_NAME}.openSettings`,
@@ -202,7 +205,8 @@ export function activate(context: vscode.ExtensionContext) {
       context,
       host || "127.0.0.1",
       port || 3710,
-      (fallbackPorts || []).filter((p) => p !== port)
+      (fallbackPorts || []).filter((p) => p !== port),
+      !!noAutoFallback
     );
 
     Logger.info("VSCode Remote Control is now active!");
