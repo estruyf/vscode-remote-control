@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-ws-extension" extension will be documented in this file.
 
+## [1.9.0]
+
+- [#17](https://github.com/estruyf/vscode-remote-control/issues/17): Make falling back to fallback ports optional
+
 ## [1.8.0]
 
 - [#12](https://github.com/estruyf/vscode-remote-control/issues/12): Get the return value back from an executed command. Thanks to [Konrad Weihmann](https://github.com/kwavnet).
